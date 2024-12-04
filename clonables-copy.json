@@ -3,7 +3,7 @@
     "default": {
       "text": "Need help with customization? Get in touch with our team",
       "link": "https://brixtemplates.com/template-customization",
-      "html": "<div class='top-bar-wrapper---brix'><div id='top-bar-text'>Need help with customization? Get in touch with our team</div><a id='top-bar-butotn' href='https://brixtemplates.com/template-customization' class='button-primary top-bar---brix w-button'>Get in Touch</a></div>",
+      "html": "<div class=\"top-bar-wrapper---brix\"><div id=\"top-bar-text\">Need help with customization? Get in touch with our team</div><a id=\"top-bar-button\" href=\"https://brixtemplates.com/template-customization\" class=\"button-primary top-bar---brix w-button\">Get in Touch</a></div>",
       "css": ".top-bar-wrapper---brix { grid-column-gap: 9px; grid-row-gap: 9px; color: #FFF; text-align: center; background-image: linear-gradient(45deg, #4a3aff, #6c55ff); justify-content: center; align-items: center; padding: 6px; font-size: 14px; line-height: 16px; display: flex; } .button-primary.top-bar---brix { background-color: #fff !important; color: #4a3aff !important; padding: 6px 7px 5px !important; font-size: 13px !important; line-height: 15px !important; } .button-primary { text-align: center; cursor: pointer; border-radius: 80px; justify-content: center; align-items: center; font-weight: 700; text-decoration: none; transition: transform .3s, box-shadow .3s, background-color .3s; display: flex; box-shadow: 0 3px 12px #4a3aff1f; }"
     }
   }
