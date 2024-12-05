@@ -1,23 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     (function() {
-        // Function to create and inject the marker div
-        function injectMarker() {
-            let currentScript = document.currentScript; // For modern browsers
-            if (!currentScript) {
-                // Fallback to manually finding the script tag
-                const scripts = document.getElementsByTagName('script');
-                currentScript = scripts[scripts.length - 1];
-            }
-            
-            if (currentScript) {
-                const marker = document.createElement('div');
-                marker.id = 'top-bar-injection-point';
-                currentScript.parentNode.insertBefore(marker, currentScript.nextSibling);
-            } else {
-                console.error('Current script element not found');
-            }
-        }
-
         // Function to fetch and inject content from JSON
         async function fetchAndInjectContent(jsonUrl) {
             try {
@@ -46,23 +28,22 @@ document.addEventListener("DOMContentLoaded", () => {
             style.textContent = topBarContent.css;
             document.head.appendChild(style);
 
-            // Inject HTML
-            const injectionPoint = document.getElementById('top-bar-injection-point');
-            if (injectionPoint) {
-                injectionPoint.outerHTML = topBarContent.html;
+            // Inject HTML at the very top of the body
+            const topBar = document.createElement('div');
+            topBar.innerHTML = topBarContent.html;
+            document.body.insertBefore(topBar.firstChild, document.body.firstChild);
 
-                // Populate Text Content
-                const textElement = document.getElementById('top-bar-text');
-                if (textElement) {
-                    textElement.textContent = topBarContent.text;
-                }
+            // Populate Text Content
+            const textElement = document.getElementById('top-bar-text');
+            if (textElement) {
+                textElement.textContent = topBarContent.text;
+            }
 
-                // Populate Button Content
-                const buttonElement = document.getElementById('top-bar-button');
-                if (buttonElement) {
-                    buttonElement.href = topBarContent.link;
-                    buttonElement.textContent = topBarContent.button;
-                }
+            // Populate Button Content
+            const buttonElement = document.getElementById('top-bar-button');
+            if (buttonElement) {
+                buttonElement.href = topBarContent.link;
+                buttonElement.textContent = topBarContent.button;
             }
         }
 
@@ -101,9 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-
-        // Main execution
-        injectMarker();
 
         // Determine the JSON URL from configuration or use default
         const jsonUrl = window.copyConfig && window.copyConfig.jsonUrl
