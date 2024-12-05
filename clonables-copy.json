@@ -11,9 +11,9 @@
   "card-accent": {
     "default": {
       "logoURL": "https://cdn.prod.website-files.com/6749d18a3dc6689e310fd81d/6749d18a3dc6689e310fd82b_brix-templates-logo-white.svg",
-      "title": "Take a look at our collection of premium  Webflow Templates",
-      "paragraph": "Also than having free Webflow cloneables, we create cutting-edge premium Webflow templates too.",
-      "buttonText": "Browse templates",
+      "title": "Hello",
+      "paragraph": "Hello",
+      "buttonText": "Hello",
       "cardLink": "https://brixtemplates.com/",
       "imageURL": "https://cdn.prod.website-files.com/6749d18a3dc6689e310fd81d/674a47e9ef55706d9297b88c_more-webflow-templates.png"
     }
@@ -21,10 +21,10 @@
   "card-white": {
     "default": {
       "logoURL": "https://cdn.prod.website-files.com/6749d18a3dc6689e310fd81d/674a485d1ffb5941e27e3a2a_brix-templates-logo.svg",
-      "title": "Want help with your Webflow site? Get in touch with us to get a quote!",
-      "paragraph": "If you want to get a hand from the amazing team behind BRIX Templates, get in touch with BRIX Agency today.",
-      "buttonText": "Get a quote",
-      "cardLink": "https://brixtemplates.com/template-customization",
+      "title": "Hello",
+      "paragraph": "Hello",
+      "buttonText": "Hello",
+      "cardLink": "https://brixtemplates.com/",
       "imageURL": "https://cdn.prod.website-files.com/6749d18a3dc6689e310fd81d/674a48ee51d49527d075a263_webflow-template-customization.png"
     }
   }
