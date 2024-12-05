@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
 
                 // Handle Top Bar Injection
-                injectTopBar(data['top-bar'].default);
+                // injectTopBar(data['top-bar'].default); // Uncomment this line to enable the top bar
 
                 // Handle Cards Injection
                 injectCard(data['card-accent'].default, 'ctaAccentCardLink');
