@@ -1,102 +1,96 @@
-// Immediately Invoked Function Expression (IIFE) to avoid polluting the global scope
-(function() {
-    // Function to create and inject the marker div
-    function injectMarker() {
-        const scripts = document.getElementsByTagName('script');
-        const currentScript = scripts[scripts.length - 1];
-        const marker = document.createElement('div');
-        marker.id = 'top-bar-injection-point';
-        currentScript.parentNode.insertBefore(marker, currentScript.nextSibling);
-    }
+// Function to fetch and inject content from JSON
+async function fetchAndInjectContent(jsonUrl) {
+    try {
+        const response = await fetch(jsonUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
 
-    // Function to fetch and inject content from JSON
-    async function fetchAndInjectContent(jsonUrl) {
-        try {
-            const response = await fetch(jsonUrl);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-
-            // Handle Top Bar Injection
+        // Wait for DOM to load before injecting the Top Bar
+        document.addEventListener("DOMContentLoaded", () => {
             injectTopBar(data['top-bar'].default);
+        });
 
-            // Handle Cards Injection
-            injectCard(data['card-accent'].default, 'ctaAccentCardLink');
-            injectCard(data['card-white'].default, 'ctaWhiteCardLink');
+        // Handle Cards Injection (these can load without waiting for DOM)
+        injectCard(data['card-accent'].default, 'ctaAccentCardLink');
+        injectCard(data['card-white'].default, 'ctaWhiteCardLink');
+    } catch (error) {
+        console.error('Error loading content:', error);
+    }
+}
 
-        } catch (error) {
-            console.error('Error loading content:', error);
+// Function to inject the Top Bar content
+function injectTopBar(topBarContent) {
+    // Inject CSS
+    const style = document.createElement('style');
+    style.textContent = topBarContent.css;
+    document.head.appendChild(style);
+
+    // Create and inject the Top Bar HTML
+    const scripts = document.getElementsByTagName('script');
+    const currentScript = scripts[scripts.length - 1];
+    const marker = document.createElement('div');
+    marker.id = 'top-bar-injection-point';
+    currentScript.parentNode.insertBefore(marker, currentScript.nextSibling);
+
+    const injectionPoint = document.getElementById('top-bar-injection-point');
+    if (injectionPoint) {
+        injectionPoint.outerHTML = topBarContent.html;
+
+        // Populate Text Content
+        const textElement = document.getElementById('top-bar-text');
+        if (textElement) {
+            textElement.textContent = topBarContent.text;
+        }
+
+        // Populate Button Content
+        const buttonElement = document.getElementById('top-bar-button');
+        if (buttonElement) {
+            buttonElement.href = topBarContent.link;
+            buttonElement.textContent = topBarContent.button;
         }
     }
+}
 
-    // Function to inject the Top Bar content
-    function injectTopBar(topBarContent) {
-        // Inject CSS
-        const style = document.createElement('style');
-        style.textContent = topBarContent.css;
-        document.head.appendChild(style);
+// Function to inject Card content
+function injectCard(cardContent, cardLinkId) {
+    const cardLink = document.getElementById(cardLinkId);
+    if (cardLink) {
+        // Update card link
+        cardLink.href = cardContent.cardLink;
 
-        // Inject HTML
-        const injectionPoint = document.getElementById('top-bar-injection-point');
-        if (injectionPoint) {
-            injectionPoint.outerHTML = topBarContent.html;
+        // Update logo
+        const logo = document.getElementById(`${cardLinkId.replace('Link', 'Logo')}`);
+        if (logo) {
+            logo.src = cardContent.logoURL;
+            logo.removeAttribute('srcset');
+        }
 
-            // Populate Text Content
-            const textElement = document.getElementById('top-bar-text');
-            if (textElement) {
-                textElement.textContent = topBarContent.text;
-            }
+        // Update title
+        const title = document.getElementById(`${cardLinkId.replace('Link', 'Title')}`);
+        if (title) title.textContent = cardContent.title;
 
-            // Populate Button Content
-            const buttonElement = document.getElementById('top-bar-button');
-            if (buttonElement) {
-                buttonElement.href = topBarContent.link;
-                buttonElement.textContent = topBarContent.button;
-            }
+        // Update paragraph
+        const paragraph = document.getElementById(`${cardLinkId.replace('Link', 'Paragraph')}`);
+        if (paragraph) paragraph.textContent = cardContent.paragraph;
+
+        // Update button text
+        const buttonText = document.getElementById(`${cardLinkId.replace('Link', 'ButtonText')}`);
+        if (buttonText) buttonText.textContent = cardContent.buttonText;
+
+        // Update main image
+        const image = cardLink.querySelector('.cta-card-image');
+        if (image) {
+            image.src = cardContent.imageURL;
+            image.removeAttribute('srcset');
+            image.removeAttribute('sizes');
         }
     }
+}
 
-    // Function to inject Card content
-    function injectCard(cardContent, cardLinkId) {
-        const cardLink = document.getElementById(cardLinkId);
-        if (cardLink) {
-            // Update card link
-            cardLink.href = cardContent.cardLink;
-
-            // Update logo
-            const logo = document.getElementById(`${cardLinkId.replace('Link', 'Logo')}`);
-            if (logo) {
-                logo.src = cardContent.logoURL;
-                logo.removeAttribute('srcset');
-            }
-
-            // Update title
-            const title = document.getElementById(`${cardLinkId.replace('Link', 'Title')}`);
-            if (title) title.textContent = cardContent.title;
-
-            // Update paragraph
-            const paragraph = document.getElementById(`${cardLinkId.replace('Link', 'Paragraph')}`);
-            if (paragraph) paragraph.textContent = cardContent.paragraph;
-
-            // Update button text
-            const buttonText = document.getElementById(`${cardLinkId.replace('Link', 'ButtonText')}`);
-            if (buttonText) buttonText.textContent = cardContent.buttonText;
-
-            // Update main image
-            const image = cardLink.querySelector('.cta-card-image');
-            if (image) {
-                image.src = cardContent.imageURL;
-                image.removeAttribute('srcset');
-                image.removeAttribute('sizes');
-            }
-        }
-    }
-
-    // Main execution
-    injectMarker();
-
-    // Determine the JSON URL from configuration or use default
+// Main execution
+(function() {
     const jsonUrl = window.copyConfig && window.copyConfig.jsonUrl
         ? window.copyConfig.jsonUrl
         : 'https://clonables-copy-git-main-brix-templates-projects.vercel.app/clonables-copy.json';
