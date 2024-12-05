@@ -10,22 +10,22 @@
   },
   "card-accent": {
     "default": {
-      "logoURL": "test1",
+      "logoURL": "logo accent card",
       "title": "Take a look at our collection of premium  Webflow Templates",
       "paragraph": "Also than having free Webflow cloneables, we create cutting-edge premium Webflow templates too.",
       "buttonText": "Browse templates",
-      "cardLink": "test2",
-      "imageURL": "test3"
+      "cardLink": "link accent card",
+      "imageURL": "image accent card"
     }
   },
   "card-white": {
     "default": {
-      "logoURL": "test1",
+      "logoURL": "logo white card",
       "title": "Want help with your Webflow site? Get in touch with us to get a quote!",
       "paragraph": "If you want to get a hand from the amazing team behind BRIX Templates, get in touch with BRIX Agency today.",
       "buttonText": "Get a quote",
-      "cardLink": "test2",
-      "imageURL": "test3"
+      "cardLink": "link white card",
+      "imageURL": "image white card"
     }
   }
 }
