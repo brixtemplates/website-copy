@@ -2,7 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
     (function() {
         // Function to create and inject the marker div
         function injectMarker() {
-            const currentScript = document.currentScript;
+            let currentScript = document.currentScript; // For modern browsers
+            if (!currentScript) {
+                // Fallback to manually finding the script tag
+                const scripts = document.getElementsByTagName('script');
+                currentScript = scripts[scripts.length - 1];
+            }
+            
             if (currentScript) {
                 const marker = document.createElement('div');
                 marker.id = 'top-bar-injection-point';
