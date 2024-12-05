@@ -2,11 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     (function() {
         // Function to create and inject the marker div
         function injectMarker() {
-            const scripts = document.getElementsByTagName('script');
-            const currentScript = scripts[scripts.length - 1];
-            const marker = document.createElement('div');
-            marker.id = 'top-bar-injection-point';
-            currentScript.parentNode.insertBefore(marker, currentScript.nextSibling);
+            const currentScript = document.currentScript;
+            if (currentScript) {
+                const marker = document.createElement('div');
+                marker.id = 'top-bar-injection-point';
+                currentScript.parentNode.insertBefore(marker, currentScript.nextSibling);
+            } else {
+                console.error('Current script element not found');
+            }
         }
 
         // Function to fetch and inject content from JSON
