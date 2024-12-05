@@ -12,7 +12,7 @@ async function fetchAndInjectContent(jsonUrl) {
             injectTopBar(data['top-bar'].default);
         });
 
-        // Handle Cards Injection (these can load without waiting for DOM)
+        // Handle Cards Injection (these load immediately)
         injectCard(data['card-accent'].default, 'ctaAccentCardLink');
         injectCard(data['card-white'].default, 'ctaWhiteCardLink');
     } catch (error) {
@@ -22,18 +22,17 @@ async function fetchAndInjectContent(jsonUrl) {
 
 // Function to inject the Top Bar content
 function injectTopBar(topBarContent) {
+    // Ensure the marker is created at the top
+    const marker = document.createElement('div');
+    marker.id = 'top-bar-injection-point';
+    document.body.insertBefore(marker, document.body.firstChild);
+
     // Inject CSS
     const style = document.createElement('style');
     style.textContent = topBarContent.css;
     document.head.appendChild(style);
 
-    // Create and inject the Top Bar HTML
-    const scripts = document.getElementsByTagName('script');
-    const currentScript = scripts[scripts.length - 1];
-    const marker = document.createElement('div');
-    marker.id = 'top-bar-injection-point';
-    currentScript.parentNode.insertBefore(marker, currentScript.nextSibling);
-
+    // Inject HTML into the marker
     const injectionPoint = document.getElementById('top-bar-injection-point');
     if (injectionPoint) {
         injectionPoint.outerHTML = topBarContent.html;
@@ -50,6 +49,8 @@ function injectTopBar(topBarContent) {
             buttonElement.href = topBarContent.link;
             buttonElement.textContent = topBarContent.button;
         }
+    } else {
+        console.error("Top bar injection point not found.");
     }
 }
 
